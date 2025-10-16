@@ -26,7 +26,7 @@ export type DayPattern =
     }
   | {
       type: DayPatternType.DATE_RANGE;
-      dateRange: { start: string; end: string }; // YYYY-MM-DD
+      dateRanges: { start: string; end: string }[]; // Array of YYYY-MM-DD ranges
     }
   | {
       type: DayPatternType.DAILY_EXCEPT;

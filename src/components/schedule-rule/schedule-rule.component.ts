@@ -60,7 +60,7 @@ export class ScheduleRuleComponent {
         newDayPattern = { type: DayPatternType.DATES, dates: [] };
         break;
       case DayPatternType.DATE_RANGE:
-        newDayPattern = { type: DayPatternType.DATE_RANGE, dateRange: { start: '', end: '' } };
+        newDayPattern = { type: DayPatternType.DATE_RANGE, dateRanges: [{ start: '', end: '' }] };
         break;
       case DayPatternType.DAILY_EXCEPT:
         newDayPattern = { type: DayPatternType.DAILY_EXCEPT, exceptDays: [false, false, false, false, false, false, false] };
@@ -132,6 +132,22 @@ export class ScheduleRuleComponent {
     const rule = this.localRule();
     if (rule?.timePattern.timeSlots) {
       rule.timePattern.timeSlots.splice(index, 1);
+      this.emitChange();
+    }
+  }
+  
+  addDateRange(): void {
+    const rule = this.localRule();
+    if (rule?.dayPattern.type === DayPatternType.DATE_RANGE) {
+      rule.dayPattern.dateRanges.push({ start: '', end: '' });
+      this.emitChange();
+    }
+  }
+
+  removeDateRange(index: number): void {
+    const rule = this.localRule();
+    if (rule?.dayPattern.type === DayPatternType.DATE_RANGE && rule.dayPattern.dateRanges.length > 1) {
+      rule.dayPattern.dateRanges.splice(index, 1);
       this.emitChange();
     }
   }

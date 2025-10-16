@@ -33,7 +33,7 @@ export class ScheduleGeneratorService {
       case DayPatternType.DATES:
         return this.formatDates(pattern.dates);
       case DayPatternType.DATE_RANGE:
-        return this.formatDateRange(pattern.dateRange);
+        return this.formatDateRanges(pattern.dateRanges);
       default:
         return '';
     }
@@ -102,7 +102,16 @@ export class ScheduleGeneratorService {
       .join(', ');
   }
 
-  private formatDateRange(dateRange: { start: string, end: string }): string {
+  private formatDateRanges(dateRanges: { start: string, end: string }[]): string {
+    if (!dateRanges || dateRanges.length === 0) return "";
+    
+    return dateRanges
+      .map(dateRange => this.formatSingleDateRange(dateRange))
+      .filter(str => str !== "")
+      .join(', ');
+  }
+
+  private formatSingleDateRange(dateRange: { start: string, end: string }): string {
     if (!dateRange.start || !dateRange.end) return "";
     
     const start = new Date(dateRange.start + 'T00:00:00');

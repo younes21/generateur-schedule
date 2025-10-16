@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+c'est une application angular qui me permet de creer generer le champ D d'un notam mais d'une maniere plus explicite (sans mot clés notam) pour ensuite les envoyer via une api , 
+voici les cas que doit gerer voici tous les cas possible que j'ai trouvé (peut etre que tu trouvera d'autre):
+-	samedi, dimanche, lundi H24
+-	samedi, dimanche, lundi du 08H00 au 14H00
+-	samedi, dimanche, lundi du 08H00 au 14H00 et du 18H00 au 21H00
+-	samedi, dimanche, lundi  Lever au coucher du soleil
+-	
+-	Samedi H24, dimanche du 09H00 au 14H00, lundi du 08H00 au 14H00
+-	Samedi H24, dimanche du 09H00 au 14H00 et du 15H00 au 22H00, lundi du 08H00 au 14H00, mardi du Lever au coucher du soleil
+-	
+-	Dimache au jeudi H24
+-	Dimache au jeudi du 08H00 au 14H00
+-	Dimache au jeudi du 08H00 au 14H00 et du 18H00 au 21H00
+-	Dimache au jeudi Lever au coucher du soleil
 
-# Run and deploy your AI Studio app
+-	 Tous les jours du 08H00 au 14H00
+-	Tous les jours du 08H00 au 14H00 et du 18H00 au 21H00
+-	Tous les jours du Lever au coucher du soleil
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/drive/1Ava4gf6X1tm92dXfR3LIzOq4TYspZJHW
-
-## Run Locally
-
-**Prerequisites:**  Node.js
+-	Tous les jours sauf mardi H24
+-	Tous les jours sauf mardi du 08H00 au 14H00
+-	Tous les jours sauf mardi du 08H00 au 14H00 et du 18H00 au 21H00
+-	Tous les jours sauf mardi du Lever au coucher du soleil
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+-   2, 3, 4 avril, 5, 6, 7 mai H24
+-   2, 3, 4 avril, 5, 6, 7 mai du 08H00 au 14H00
+-   2, 3, 4 avril, 5, 6, 7 mai du 08H00 au 14H00 et du 18H00 au 21H00
+-   2, 3, 4 avril, 5, 6, 7 mai Lever au coucher du soleil
+
+-   2 avril H24, 3 avril du 09H00 au 14H00, 4 avril du 08H00 au 14H00
+-   2 avril H24, 3 avril du 09H00 au 14H00 et du 15H00 au 22H00, 4 du 08H00 au 14H00, mardi du Lever au coucher du soleil
+
+-   du 2 au 10 avril H24
+-   du 2 au 10 avril du 08H00 au 14H00
+-   du 2 au 10 avril du 08H00 au 14H00 et du 18H00 au 21H00
+-   du 2 au 10 avril Lever au coucher du soleil
+
+-   du 2 au 10 avril H24, du 11 au 20 avril du 09H00 au 14H00
+-   du 2 au 10 avril du 09H00 au 14H00 et du 15H00 au 22H00, du 11 au 20 avril du 08H00 au 14H00 et du 18H00 au 21H00, du 2 au 10 avril Lever au coucher du soleil

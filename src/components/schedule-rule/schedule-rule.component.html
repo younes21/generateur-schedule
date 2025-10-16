@@ -81,14 +81,28 @@
             }
              @case ('DATE_RANGE') {
               <div class="space-y-3">
-                <div>
-                  <label class="block text-sm text-slate-500 mb-1">Date de début</label>
-                  <input type="date" [(ngModel)]="rule.dayPattern.dateRange.start" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
-                </div>
-                 <div>
-                  <label class="block text-sm text-slate-500 mb-1">Date de fin</label>
-                  <input type="date" [(ngModel)]="rule.dayPattern.dateRange.end" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
-                </div>
+                @for (dateRange of rule.dayPattern.dateRanges; track $index; let i = $index) {
+                  <div class="space-y-2 p-3 bg-slate-50 rounded-md border border-slate-200">
+                    <div class="flex items-center justify-between">
+                      <label class="block text-xs font-medium text-slate-600">Intervalle {{i + 1}}</label>
+                      <button (click)="removeDateRange(i)" title="Supprimer l'intervalle" [class.invisible]="rule.dayPattern.dateRanges.length <= 1" class="text-slate-400 hover:text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      </button>
+                    </div>
+                    <div>
+                      <label class="block text-xs text-slate-500 mb-1">Date de début</label>
+                      <input type="date" [(ngModel)]="dateRange.start" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                    </div>
+                    <div>
+                      <label class="block text-xs text-slate-500 mb-1">Date de fin</label>
+                      <input type="date" [(ngModel)]="dateRange.end" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                    </div>
+                  </div>
+                }
+                <button (click)="addDateRange()" class="text-sm font-medium text-sky-600 hover:text-sky-800 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Ajouter un intervalle
+                </button>
               </div>
             }
           }
