@@ -4,7 +4,7 @@ This is a NOTAM (Notice to Airmen) Schedule Generator application built with Ang
 
 **Status**: Successfully imported and configured for Replit environment (October 16, 2025)
 
-**Latest Update**: Vite configuration added to resolve Replit proxy host blocking (October 16, 2025)
+**Latest Update**: DATE_RANGE pattern now supports multiple date intervals (October 16, 2025)
 
 # User Preferences
 
@@ -37,7 +37,7 @@ Preferred communication style: Simple, everyday language.
 - **Discriminated Unions**: TypeScript discriminated unions for day and time pattern types
 - **Type Safety**: Strong typing for all schedule patterns with enums and interfaces
 - **Patterns**:
-  - Day Patterns: WEEKLY, DATES, DATE_RANGE, DAILY_EXCEPT
+  - Day Patterns: WEEKLY, DATES, DATE_RANGE (supports multiple intervals), DAILY_EXCEPT
   - Time Patterns: H24, TIME_RANGE, SUNRISE_SUNSET
 
 ## Service Layer
