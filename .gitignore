@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Angular
+.angular/
+
+# Keep Replit config
+!.replit
+!replit.nix
