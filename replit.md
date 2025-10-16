@@ -49,6 +49,15 @@ Preferred communication style: Simple, everyday language.
   - Rule composition and concatenation
 - **Injection**: Provided at root level for singleton behavior
 
+- **ApiService**: HTTP service for saving and loading schedule rules via API (Added: October 16, 2025)
+- **Responsibilities**:
+  - POST requests to save schedule rules with timestamp and optional userId
+  - GET requests to retrieve saved schedule rules
+  - HTTP headers configuration (Content-Type, optional Authorization)
+- **Current Configuration**: Uses JSONPlaceholder as a mock API endpoint for testing
+- **Integration**: HttpClient configured via `provideHttpClient()` in bootstrap
+- **UI Integration**: "Sauvegarder vers l'API" button with loading states (idle, saving, success, error)
+
 ## Localization
 - **Locale**: French (fr) configured at bootstrap
 - **Implementation**: Angular's built-in i18n with French locale data registered
