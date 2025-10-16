@@ -4,6 +4,8 @@ This is a NOTAM (Notice to Airmen) Schedule Generator application built with Ang
 
 **Status**: Successfully imported and configured for Replit environment (October 16, 2025)
 
+**Latest Update**: Vite configuration added to resolve Replit proxy host blocking (October 16, 2025)
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -78,7 +80,10 @@ Preferred communication style: Simple, everyday language.
 - **http-server**: Static file server for production deployment
 
 ## Replit Configuration
-- **Development Server**: Configured to run on 0.0.0.0:5000 with allowedHosts: ["all"] for Replit proxy compatibility
+- **Development Server**: Configured to run on 0.0.0.0:5000
+- **Host Configuration**: 
+  - Angular dev server configured with `allowedHosts: ["all"]` in angular.json
+  - Vite server configured with `allowedHosts: ['all']` in vite.config.js for Replit proxy compatibility
 - **Workflow**: Angular Dev Server workflow set up to run `npm run dev`
 - **Deployment**: Configured for autoscale deployment with:
   - Build command: `npm run build`
