@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScheduleRuleComponent } from './components/schedule-rule/schedule-rule.component';
 import { ScheduleRule, DayPatternType, TimePatternType } from './models/schedule.model';
