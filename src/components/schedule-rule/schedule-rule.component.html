@@ -1,0 +1,144 @@
+@if (localRule(); as rule) {
+  <div class="bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden transition-shadow hover:shadow-lg">
+    <div class="p-5">
+      <div class="flex justify-between items-start mb-6">
+        <h3 class="text-lg font-semibold text-slate-800">Définition de la Règle</h3>
+        <button (click)="emitRemove()" title="Supprimer la règle" class="text-slate-400 hover:text-red-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+        <!-- Day Pattern Section -->
+        <div>
+          <label for="dayPatternType-{{rule.id}}" class="block text-sm font-medium text-slate-600 mb-2">Jours d'application</label>
+           <select 
+            id="dayPatternType-{{rule.id}}" 
+            [ngModel]="rule.dayPattern.type" 
+            (ngModelChange)="onDayPatternTypeChange($event)"
+            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm mb-3">
+              @for (type of dayPatternTypes; track type) {
+                <option [value]="type">{{ dayPatternTypeLabels[type] }}</option>
+              }
+          </select>
+
+          @switch (rule.dayPattern.type) {
+            @case ('WEEKLY') {
+              <label class="block text-sm text-slate-500 mb-2">Sélectionnez les jours :</label>
+              <div class="flex flex-wrap gap-2 rounded-md bg-slate-50 p-3 border border-slate-200">
+                @for (day of dayLabels; track day; let i = $index) {
+                  <button
+                    (click)="toggleDay(i)"
+                    [class.bg-sky-600]="rule.dayPattern.days[i]"
+                    [class.text-white]="rule.dayPattern.days[i]"
+                    [class.bg-white]="!rule.dayPattern.days[i]"
+                    [class.text-slate-700]="!rule.dayPattern.days[i]"
+                    class="px-3 py-1.5 text-sm font-semibold rounded-md border border-slate-300 hover:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all duration-150 shadow-sm"
+                  >
+                    {{ day }}
+                  </button>
+                }
+              </div>
+            }
+            @case ('DAILY_EXCEPT') {
+              <label class="block text-sm text-slate-500 mb-2">Exclure les jours suivants :</label>
+              <div class="flex flex-wrap gap-2 rounded-md bg-slate-50 p-3 border border-slate-200">
+                @for (day of dayLabels; track day; let i = $index) {
+                  <button
+                    (click)="toggleExceptDay(i)"
+                    [class.bg-red-500]="rule.dayPattern.exceptDays[i]"
+                    [class.text-white]="rule.dayPattern.exceptDays[i]"
+                    [class.bg-white]="!rule.dayPattern.exceptDays[i]"
+                    [class.text-slate-700]="!rule.dayPattern.exceptDays[i]"
+                    class="px-3 py-1.5 text-sm font-semibold rounded-md border border-slate-300 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-150 shadow-sm"
+                  >
+                    {{ day }}
+                  </button>
+                }
+              </div>
+            }
+            @case ('DATES') {
+              <div class="space-y-3">
+                 <div class="flex items-center gap-2">
+                    <input type="date" [(ngModel)]="newDate" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+                    <button (click)="addDate()" class="px-3 py-2 bg-slate-200 text-slate-700 text-sm font-medium rounded-md hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-sky-500">Ajouter</button>
+                 </div>
+                 @if(rule.dayPattern.dates.length > 0) {
+                  <div class="flex flex-wrap gap-2 pt-2">
+                    @for(date of rule.dayPattern.dates; track date) {
+                      <span class="flex items-center bg-sky-100 text-sky-800 text-sm font-medium pl-3 pr-1 py-1 rounded-full">
+                        {{ date | date:'d MMMM y' }}
+                        <button (click)="removeDate(date)" class="ml-1.5 text-sky-600 hover:text-sky-800">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </button>
+                      </span>
+                    }
+                  </div>
+                 }
+              </div>
+            }
+             @case ('DATE_RANGE') {
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-sm text-slate-500 mb-1">Date de début</label>
+                  <input type="date" [(ngModel)]="rule.dayPattern.dateRange.start" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+                </div>
+                 <div>
+                  <label class="block text-sm text-slate-500 mb-1">Date de fin</label>
+                  <input type="date" [(ngModel)]="rule.dayPattern.dateRange.end" (ngModelChange)="emitChange()" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Time Pattern Section -->
+        <div>
+          <label for="timePatternType-{{rule.id}}" class="block text-sm font-medium text-slate-600 mb-2">Plage Horaire</label>
+          <select 
+            id="timePatternType-{{rule.id}}" 
+            [ngModel]="rule.timePattern.type" 
+            (ngModelChange)="onTimePatternTypeChange($event)"
+            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+              <option [value]="'TIME_RANGE'">Plage(s) horaire(s) spécifique(s)</option>
+              <option [value]="'H24'">Toute la journée (H24)</option>
+              <option [value]="'SUNRISE_SUNSET'">Du lever au coucher du soleil</option>
+          </select>
+
+          @switch (rule.timePattern.type) {
+            @case ('TIME_RANGE') {
+              <div class="mt-4 space-y-3">
+                @if(rule.timePattern.timeSlots; as timeSlots) {
+                  @for (slot of timeSlots; track $index; let i = $index) {
+                    <div class="flex items-center gap-2">
+                      <input 
+                        type="time"
+                        [(ngModel)]="slot.start"
+                        (ngModelChange)="emitChange()" 
+                        class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+                      <span class="text-slate-500">à</span>
+                      <input 
+                        type="time" 
+                        [(ngModel)]="slot.end"
+                        (ngModelChange)="emitChange()" 
+                        class="block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
+                      <button (click)="removeTimeSlot(i)" title="Supprimer la plage" [class.invisible]="timeSlots.length <= 1" class="text-slate-400 hover:text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      </button>
+                    </div>
+                  }
+                }
+                <button (click)="addTimeSlot()" class="text-sm font-medium text-sky-600 hover:text-sky-800 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Ajouter une plage
+                </button>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}
